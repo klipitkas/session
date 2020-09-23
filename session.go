@@ -10,7 +10,6 @@ import (
 	"log"
 	"reflect"
 	"strings"
-	"sync"
 	"time"
 
 	fsession "github.com/fasthttp/session/v2"
@@ -66,10 +65,14 @@ type Config struct {
 
 // Session ...
 type Session struct {
-	config    Config
-	core      *fsession.Session
-	storePool *sync.Pool
+	config Config
+	core   *fsession.Session
 }
+
+const (
+	DefaultExpiration = time.Hour * 12
+	DefaultGCInterval = time.Minute * 1
+)
 
 // New ...
 func New(config ...Config) *Session {
@@ -83,10 +86,10 @@ func New(config ...Config) *Session {
 		cfg.Lookup = "cookie:session_id"
 	}
 	if cfg.Expiration == 0 {
-		cfg.Expiration = 12 * time.Hour
+		cfg.Expiration = DefaultExpiration
 	}
 	if cfg.GCInterval == 0 {
-		cfg.GCInterval = 1 * time.Minute
+		cfg.GCInterval = DefaultGCInterval
 	}
 	if cfg.Generator == nil {
 		cfg.Generator = defaultGenerator
