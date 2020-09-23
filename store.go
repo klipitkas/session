@@ -10,7 +10,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// Store is a wrapper arround the session.Store
+// Store is a wrapper around the session.Store
 type Store struct {
 	ctx  *fiber.Ctx
 	sess *Session
