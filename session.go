@@ -138,7 +138,7 @@ func New(config ...Config) *Session {
 	}
 	provider := fmt.Sprintf("%v", reflect.TypeOf(cfg.Provider))
 	switch provider {
-	case "*mysql.Provider", "*sqlite3.Provider":
+	case "*mysql.Provider", "*sqlite3.Provider", "*postgre.Provider":
 		scfg.EncodeFunc = fsession.Base64Encode
 		scfg.DecodeFunc = fsession.Base64Decode
 	default:
